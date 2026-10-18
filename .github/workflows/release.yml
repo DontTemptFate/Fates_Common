@@ -1,6 +1,7 @@
 name: Release
 
-# Push a tag v<version> (= `version` in gradle.properties) to publish the library:
+# Publishes the library whenever `version` in gradle.properties changes on main (or a tag v<version>
+# is pushed), and that version isn't published yet:
 #   - builds and tests both Minecraft variants
 #   - adds them to the Maven repository on the `maven` branch (never overwrites a published version),
 #     served at https://raw.githubusercontent.com/DontTemptFate/Fates_Common/maven
@@ -8,13 +9,38 @@ name: Release
 
 on:
   push:
+    branches: [main]
+    paths: [gradle.properties]
     tags: ["v*"]
+  workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.v.outputs.version }}
+      publish: ${{ steps.v.outputs.publish }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - id: v
+        run: |
+          VERSION=$(grep -E '^version=' gradle.properties | cut -d= -f2 | tr -d '[:space:]')
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          if [ "${GITHUB_REF_TYPE}" = "tag" ] && [ "${GITHUB_REF_NAME#v}" != "$VERSION" ]; then
+            echo "::error::Tag ${GITHUB_REF_NAME} doesn't match version=$VERSION"; exit 1
+          fi
+          if git ls-remote --exit-code --tags origin "refs/tags/v$VERSION" >/dev/null && [ "${GITHUB_REF_TYPE}" != "tag" ]; then
+            echo "publish=false" >> "$GITHUB_OUTPUT"; echo "::notice::v$VERSION is already published"
+          else
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+          fi
+
   build:
+    needs: check
+    if: needs.check.outputs.publish == 'true'
     name: Build ${{ matrix.mc }}
     runs-on: ubuntu-latest
     strategy:
@@ -28,10 +54,6 @@ jobs:
           distribution: temurin
           java-version: 25
       - uses: gradle/actions/setup-gradle@ed408507eac070d1f99cc633dbcf757c94c7933a # v4
-      - name: Tag matches the version
-        run: |
-          VERSION=$(grep -E '^version=' gradle.properties | cut -d= -f2 | tr -d '[:space:]')
-          [ "${GITHUB_REF_NAME#v}" = "$VERSION" ] || { echo "::error::Tag ${GITHUB_REF_NAME} doesn't match version=$VERSION"; exit 1; }
       - name: Build, test, publish to a local repo
         run: |
           chmod +x ./gradlew
@@ -46,7 +68,7 @@ jobs:
           path: build/libs/fatescommon-*+mc${{ matrix.mc }}.jar
 
   publish:
-    needs: build
+    needs: [check, build]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -87,7 +109,7 @@ jobs:
           (cd "$META" && sha1sum maven-metadata.xml | cut -d' ' -f1 > maven-metadata.xml.sha1 && md5sum maven-metadata.xml | cut -d' ' -f1 > maven-metadata.xml.md5)
           cd /tmp/maven
           git add -A
-          git commit -qm "fatescommon ${GITHUB_REF_NAME}"
+          git commit -qm "fatescommon v${{ needs.check.outputs.version }}"
           git push -q "https://x-access-token:${GH_PUSH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" maven
       - name: GitHub Release
         env:
@@ -95,5 +117,7 @@ jobs:
         run: |
           mkdir -p dist && cp /tmp/art/jar-*/*.jar dist/
           (cd dist && sha256sum *.jar > SHA256SUMS.txt)
-          gh release create "$GITHUB_REF_NAME" dist/* --title "Fates Common ${GITHUB_REF_NAME#v}" \
-            --notes "Library for the Fates mods (bundled inside them). Maven: https://raw.githubusercontent.com/DontTemptFate/Fates_Common/maven" --verify-tag
+          V="${{ needs.check.outputs.version }}"
+          # creates the tag v<version> on this commit when it doesn't exist yet
+          gh release create "v$V" dist/* --target "$GITHUB_SHA" --title "Fates Common $V" \
+            --notes "Library for the Fates mods (bundled inside them). Maven: https://raw.githubusercontent.com/DontTemptFate/Fates_Common/maven"

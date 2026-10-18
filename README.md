@@ -40,9 +40,9 @@ One jar per Minecraft version (`+mc26.2`, `+mc26.3`), like the mods.
 Semantic versioning. Additions bump the minor (0.1 → 0.2), anything that breaks a caller bumps the
 major. A published version is never overwritten.
 
-Release: set `version` in `gradle.properties`, push, then push the tag `v<version>`. The release
-workflow builds and tests both variants, adds them to the Maven repository on the `maven` branch and
-creates a GitHub Release with checksums.
+Release: change `version` in `gradle.properties` and push to `main`. The release workflow sees a
+version that isn't published yet, builds and tests both variants, adds them to the Maven repository
+on the `maven` branch and creates the tag `v<version>` with a GitHub Release and checksums.
 
 ## Who changes what
 
