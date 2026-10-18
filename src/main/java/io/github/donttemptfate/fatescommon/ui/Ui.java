@@ -45,6 +45,34 @@ public final class Ui {
 	static final int BORDER_INNER = 0xFF28007F;
 	static final int BG_RGB = 0x100010;
 
+	// ---- theme (0.3.0; Fates OFA's four themes). The constants above are the Fates theme's values. ----
+	private static volatile Theme theme = Theme.FATES;
+
+	/** Sets the colour theme for every Fates card and screen (one choice for all Fates mods; see {@code Settings}). */
+	public static void theme(Theme t) {
+		theme = t == null ? Theme.FATES : t;
+	}
+
+	public static Theme theme() {
+		return theme;
+	}
+
+	public static int rule() {
+		return theme.rule();
+	}
+
+	public static int track() {
+		return theme.track();
+	}
+
+	public static int bar() {
+		return theme.bar();
+	}
+
+	public static int accent() {
+		return theme.accent();
+	}
+
 	/** Text sizes (Chakra Petch) — one font file per size, see assets/fatescommon/font. */
 	public enum Role {
 		LABEL("ui_label", 6.5f),
@@ -110,7 +138,7 @@ public final class Ui {
 	 * Where the baseline sits below the y a line of text is drawn at, as share of the font size
 	 * for TrueType fonts (Minecraft's bitmap font: 7 px).
 	 */
-	static float baselineAt(Role r) {
+	public static float baselineAt(Role r) {
 		return r.pixel() ? 7f * r.vanillaScale() : BASELINE_K * r.size + BASELINE_C;
 	}
 
@@ -124,8 +152,9 @@ public final class Ui {
 		chakra = on;
 	}
 
+	/** Chakra Petch is used when the player allows it and the theme uses it (the Vanilla theme doesn't). */
 	public static boolean chakra() {
-		return chakra;
+		return chakra && theme.chakra();
 	}
 
 	public static Font font() {
@@ -159,7 +188,7 @@ public final class Ui {
 	}
 
 	/** Draws text so its baseline lands at {@code baseline}. */
-	static void draw(GuiGraphicsExtractor g, Component c, Role role, int x, int baseline) {
+	public static void draw(GuiGraphicsExtractor g, Component c, Role role, int x, int baseline) {
 		if (role.pixel() && role.vanillaScale() != 1f) {
 			float s = role.vanillaScale();
 			g.pose().pushMatrix();
@@ -173,7 +202,7 @@ public final class Ui {
 	}
 
 	/** Width of text drawn in a role (scaled for the Minecraft font's big numbers). */
-	static int width(Component c, Role role) {
+	public static int width(Component c, Role role) {
 		int w = font().width(c);
 		return role.pixel() && role.vanillaScale() != 1f ? Math.round(w * role.vanillaScale()) : w;
 	}
@@ -182,11 +211,12 @@ public final class Ui {
 	/** Frame: 2 px halo, 2 px #5000FF, 2 px #28007F, then the background. {@code alpha} 0..1 for the background. */
 	public static void frame(GuiGraphicsExtractor g, int x, int y, int w, int h, float alpha) {
 		int a = Math.round(Math.max(0, Math.min(1, alpha)) * 255);
-		int bg = (a << 24) | BG_RGB;
-		int halo = (Math.round(a * 0.9f) << 24) | BG_RGB;
+		Theme t = theme;
+		int bg = (a << 24) | t.bgRgb();
+		int halo = (Math.round(a * 0.9f) << 24) | t.bgRgb();
 		ring(g, x - 2, y - 2, w + 4, h + 4, 2, halo);
-		ring(g, x, y, w, h, 2, BORDER_OUTER);
-		ring(g, x + 2, y + 2, w - 4, h - 4, 2, BORDER_INNER);
+		ring(g, x, y, w, h, 2, t.outer());
+		ring(g, x + 2, y + 2, w - 4, h - 4, 2, t.inner());
 		g.fill(x + 4, y + 4, x + w - 4, y + h - 4, bg);
 	}
 

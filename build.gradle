@@ -10,6 +10,9 @@ def versionProps = new Properties()
 versionFile.withInputStream { versionProps.load(it) }
 versionProps.each { k, v -> project.ext.set(k as String, v as String) }
 
+// The few calls that differ between Minecraft versions (26.2 GLFW, 26.3 SDL3) live in src/mc<version>/java.
+sourceSets.main.java.srcDir "src/mc${mcTarget}/java"
+
 def libVersion = project.version
 version = "${libVersion}+mc${project.minecraft_version}"
 group = project.group

@@ -13,6 +13,7 @@ public final class FatesCommon implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
+		Settings.load(net.fabricmc.loader.api.FabricLoader.getInstance().getConfigDir().resolve("fatescommon.json"));
 		ClientTickEvents.END_CLIENT_TICK.register(SkyBlockLocation::tick);
 	}
 }

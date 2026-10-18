@@ -120,11 +120,11 @@ public final class Card {
 		int trackTop = y + 6;
 		int trackH = viewH - 12;
 		int bx = x + w - 7;
-		g.fill(bx, trackTop, bx + 2, trackTop + trackH, Ui.RULE);
+		g.fill(bx, trackTop, bx + 2, trackTop + trackH, Ui.rule());
 		int thumbH = Math.max(8, Math.round(trackH * (float) viewH / h));
 		int maxOff = Math.max(1, h - viewH);
 		int thumbY = trackTop + Math.round((trackH - thumbH) * Math.min(1f, (float) offset / maxOff));
-		g.fill(bx, thumbY, bx + 2, thumbY + thumbH, Ui.PINK);
+		g.fill(bx, thumbY, bx + 2, thumbY + thumbH, Ui.accent());
 	}
 
 	// ==== elements ==================================================================================
@@ -309,7 +309,7 @@ public final class Card {
 				lineEnd = x + w - mw - 4;
 			}
 			int ly = base - Role.LABEL.cap() / 2;
-			if (lineEnd > x + lw + 4) g.fill(x + lw + 4, ly, lineEnd, ly + 1, Ui.RULE);
+			if (lineEnd > x + lw + 4) g.fill(x + lw + 4, ly, lineEnd, ly + 1, Ui.rule());
 		}
 	}
 
@@ -472,7 +472,7 @@ public final class Card {
 			for (int i = 0; i < n; i++) {
 				int cx = x + i * (colW + 5);
 				int bw = max > 0 ? (int) Math.max(2, Math.round(colW * prices[i] / max)) : 2;
-				g.fill(cx, y, cx + bw, y + 2, ignored[i] ? Ui.DARK : Ui.BAR);
+				g.fill(cx, y, cx + bw, y + 2, ignored[i] ? Ui.DARK : Ui.bar());
 				int base = y + 4 + Role.SMALL.cap();
 				Component p = Ui.t(io.github.donttemptfate.fatescommon.text.Coins.format(prices[i]) + " ", Role.SMALL, ignored[i] ? Ui.DARK : Ui.WHITE);
 				Ui.draw(g, p, Role.SMALL, cx, base);
@@ -591,8 +591,8 @@ public final class Card {
 
 		@Override
 		public void draw(GuiGraphicsExtractor g, int x, int y, int w) {
-			g.fill(x, y, x + w, y + 4, Ui.TRACK);
-			Ui.ring(g, x, y, w, 4, 1, Ui.RULE);
+			g.fill(x, y, x + w, y + 4, Ui.track());
+			Ui.ring(g, x, y, w, 4, 1, Ui.rule());
 			int fw = (int) Math.round((w - 2) * fraction);
 			if (fw > 0) g.fill(x + 1, y + 1, x + 1 + fw, y + 3, color);
 		}
