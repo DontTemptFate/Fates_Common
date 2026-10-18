@@ -27,11 +27,34 @@ public final class Settings {
 	private static volatile boolean chakra = true;
 	private static volatile String theme = Theme.FATES.id();
 	private static volatile boolean existed;
+	private static volatile boolean loaded;
+
+	/**
+	 * Loads {@code config/fatescommon.json} if nothing has yet. Every getter and setter calls this, so a
+	 * mod that starts before the library (Fabric doesn't order mods) still sees the saved values.
+	 */
+	public static void init() {
+		if (loaded) return;
+		synchronized (Settings.class) {
+			if (!loaded) load(defaultFile());
+		}
+	}
+
+	private static Path defaultFile() {
+		try {
+			return net.fabricmc.loader.api.FabricLoader.getInstance().getConfigDir().resolve("fatescommon.json");
+		} catch (Throwable t) {
+			return null; // outside the game (unit tests): nothing saved
+		}
+	}
 
 	/** Reads the file (missing or broken → defaults) and applies it. Called once by the library at start. */
 	public static synchronized void load(Path path) {
 		file = path;
+		loaded = true;
 		existed = false;
+		chakra = true;
+		theme = Theme.FATES.id();
 		try {
 			if (path != null && Files.isRegularFile(path) && Files.size(path) < 64 * 1024) {
 				JsonObject o = JsonParser.parseString(Files.readString(path, StandardCharsets.UTF_8)).getAsJsonObject();
@@ -47,24 +70,29 @@ public final class Settings {
 
 	/** False until the file has been written once (lets a mod carry over its own older setting). */
 	public static boolean saved() {
+		init();
 		return existed;
 	}
 
 	public static boolean chakra() {
+		init();
 		return chakra;
 	}
 
 	public static Theme theme() {
+		init();
 		return Theme.byId(theme);
 	}
 
 	public static synchronized void setChakra(boolean on) {
+		init();
 		chakra = on;
 		apply();
 		save();
 	}
 
 	public static synchronized void setTheme(Theme t) {
+		init();
 		theme = (t == null ? Theme.FATES : t).id();
 		apply();
 		save();
