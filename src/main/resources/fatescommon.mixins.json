@@ -1,6 +1,6 @@
 {
 	"required": true,
-	"package": "io.github.donttemptfate.fates.common.mixin",
+	"package": "io.github.donttemptfate.fatescommon.mixin",
 	"compatibilityLevel": "JAVA_25",
 	"client": [
 		"GuiGraphicsExtractorMixin"

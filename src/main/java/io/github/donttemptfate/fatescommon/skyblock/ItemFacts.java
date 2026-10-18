@@ -1,6 +1,6 @@
-package io.github.donttemptfate.fates.common.skyblock;
+package io.github.donttemptfate.fatescommon.skyblock;
 
-import io.github.donttemptfate.fates.common.text.LegacyText;
+import io.github.donttemptfate.fatescommon.text.LegacyText;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

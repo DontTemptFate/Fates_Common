@@ -1,6 +1,6 @@
-package io.github.donttemptfate.fates.common.ui;
+package io.github.donttemptfate.fatescommon.ui;
 
-import io.github.donttemptfate.fates.common.ui.Ui.Role;
+import io.github.donttemptfate.fatescommon.ui.Ui.Role;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -453,7 +453,7 @@ public final class Card {
 		}
 
 		int label(int i) {
-			return Ui.width(Ui.t(io.github.donttemptfate.fates.common.text.Coins.format(prices[i]) + " ", Role.SMALL, Ui.WHITE), Role.SMALL)
+			return Ui.width(Ui.t(io.github.donttemptfate.fatescommon.text.Coins.format(prices[i]) + " ", Role.SMALL, Ui.WHITE), Role.SMALL)
 					+ Ui.width(Ui.t(ages[i], Role.SMALL, Ui.DARK), Role.SMALL);
 		}
 
@@ -474,7 +474,7 @@ public final class Card {
 				int bw = max > 0 ? (int) Math.max(2, Math.round(colW * prices[i] / max)) : 2;
 				g.fill(cx, y, cx + bw, y + 2, ignored[i] ? Ui.DARK : Ui.BAR);
 				int base = y + 4 + Role.SMALL.cap();
-				Component p = Ui.t(io.github.donttemptfate.fates.common.text.Coins.format(prices[i]) + " ", Role.SMALL, ignored[i] ? Ui.DARK : Ui.WHITE);
+				Component p = Ui.t(io.github.donttemptfate.fatescommon.text.Coins.format(prices[i]) + " ", Role.SMALL, ignored[i] ? Ui.DARK : Ui.WHITE);
 				Ui.draw(g, p, Role.SMALL, cx, base);
 				Ui.draw(g, Ui.t(ages[i], Role.SMALL, Ui.DARK), Role.SMALL, cx + Ui.width(p, Role.SMALL), base);
 			}

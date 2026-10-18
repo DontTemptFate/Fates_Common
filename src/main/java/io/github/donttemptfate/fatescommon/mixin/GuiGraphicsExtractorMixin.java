@@ -1,6 +1,6 @@
-package io.github.donttemptfate.fates.common.mixin;
+package io.github.donttemptfate.fatescommon.mixin;
 
-import io.github.donttemptfate.fates.common.ui.DeferredTooltip;
+import io.github.donttemptfate.fatescommon.ui.DeferredTooltip;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

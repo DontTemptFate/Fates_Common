@@ -1,6 +1,6 @@
-package io.github.donttemptfate.fates.common.ui;
+package io.github.donttemptfate.fatescommon.ui;
 
-import io.github.donttemptfate.fates.common.FatesCommon;
+import io.github.donttemptfate.fatescommon.FatesCommon;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;

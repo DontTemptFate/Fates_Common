@@ -1,4 +1,4 @@
-package io.github.donttemptfate.fates.common.skyblock;
+package io.github.donttemptfate.fatescommon.skyblock;
 
 import java.util.List;
 import java.util.Locale;

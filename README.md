@@ -26,14 +26,17 @@ repositories {
 	maven { url "https://raw.githubusercontent.com/DontTemptFate/Fates_Common/maven" }
 }
 dependencies {
-	implementation "io.github.donttemptfate:fatescommon:0.1.0+mc${project.minecraft_version}"
-	include "io.github.donttemptfate:fatescommon:0.1.0+mc${project.minecraft_version}"
+	implementation "io.github.donttemptfate:fatescommon:0.2.0+mc${project.minecraft_version}"
+	include "io.github.donttemptfate:fatescommon:0.2.0+mc${project.minecraft_version}"
 }
 ```
 
-and in `fabric.mod.json`: `"depends": { "fatescommon": ">=0.1.0" }`.
+and in `fabric.mod.json`: `"depends": { "fatescommon": ">=0.2.0" }`.
 
 One jar per Minecraft version (`+mc26.2`, `+mc26.3`), like the mods.
+
+Package: `io.github.donttemptfate.fatescommon` (0.2.0+; deliberately different from Fates OFA's
+older in-repo `io.github.donttemptfate.fates.common`, so the two can never clash while OFA moves over).
 
 ## Versions
 

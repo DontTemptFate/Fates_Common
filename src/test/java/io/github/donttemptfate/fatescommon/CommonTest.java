@@ -1,9 +1,9 @@
-package io.github.donttemptfate.fates.common;
+package io.github.donttemptfate.fatescommon;
 
-import io.github.donttemptfate.fates.common.skyblock.LoreParts;
-import io.github.donttemptfate.fates.common.text.Coins;
-import io.github.donttemptfate.fates.common.text.LegacyText;
-import io.github.donttemptfate.fates.common.text.Versions;
+import io.github.donttemptfate.fatescommon.skyblock.LoreParts;
+import io.github.donttemptfate.fatescommon.text.Coins;
+import io.github.donttemptfate.fatescommon.text.LegacyText;
+import io.github.donttemptfate.fatescommon.text.Versions;
 import org.junit.Test;
 
 import java.util.List;

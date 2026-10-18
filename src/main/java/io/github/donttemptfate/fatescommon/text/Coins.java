@@ -1,4 +1,4 @@
-package io.github.donttemptfate.fates.common.text;
+package io.github.donttemptfate.fatescommon.text;
 
 import java.util.Locale;
 
