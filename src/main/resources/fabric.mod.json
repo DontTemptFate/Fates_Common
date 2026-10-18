@@ -1,0 +1,29 @@
+{
+	"schemaVersion": 1,
+	"id": "fatescommon",
+	"version": "${version}",
+	"name": "Fates Common",
+	"description": "Shared library for the Fates mods (Fates Flipper, Fates OFA): the Fates look, text helpers and SkyBlock reading. Bundled inside those mods; not installed on its own.",
+	"authors": ["Fate"],
+	"contact": {
+		"sources": "https://github.com/DontTemptFate/Fates_Common",
+		"issues": "https://github.com/DontTemptFate/Fates_Common/issues"
+	},
+	"license": "GPL-3.0-only",
+	"environment": "client",
+	"entrypoints": {
+		"client": ["io.github.donttemptfate.fates.common.FatesCommon"]
+	},
+	"mixins": ["fatescommon.mixins.json"],
+	"depends": {
+		"fabricloader": ">=0.19.3",
+		"minecraft": "${minecraft_dep}",
+		"java": ">=25",
+		"fabric-api": "${fabric_api_dep}"
+	},
+	"custom": {
+		"modmenu": {
+			"badges": ["library"]
+		}
+	}
+}

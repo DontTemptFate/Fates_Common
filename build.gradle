@@ -1,0 +1,88 @@
+plugins {
+	id 'net.fabricmc.fabric-loom' version "${loom_version}"
+	id 'maven-publish'
+}
+
+def mcTarget = project.findProperty("mc") ?: "26.2"
+def versionFile = file("versions/${mcTarget}.properties")
+if (!versionFile.exists()) throw new GradleException("No versions/${mcTarget}.properties")
+def versionProps = new Properties()
+versionFile.withInputStream { versionProps.load(it) }
+versionProps.each { k, v -> project.ext.set(k as String, v as String) }
+
+def libVersion = project.version
+version = "${libVersion}+mc${project.minecraft_version}"
+group = project.group
+
+base {
+	archivesName = project.archives_base_name
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
+	testImplementation "junit:junit:4.13.2"
+}
+
+processResources {
+	def v = project.version
+	def minecraftDep = project.minecraft_dep
+	def fabricApiDep = ">=" + project.fabric_api_version.split("\\+")[0]
+	inputs.property "version", v
+	inputs.property "minecraftDep", minecraftDep
+	inputs.property "fabricApiDep", fabricApiDep
+	filesMatching("fabric.mod.json") {
+		expand "version": v, "minecraft_dep": minecraftDep, "fabric_api_dep": fabricApiDep
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = 25
+	it.options.encoding = "UTF-8"
+}
+
+java {
+	sourceCompatibility = JavaVersion.VERSION_25
+	targetCompatibility = JavaVersion.VERSION_25
+	withSourcesJar()
+}
+
+test {
+	useJUnit()
+	testLogging {
+		events "failed"
+		exceptionFormat "full"
+	}
+}
+
+jar {
+	from("LICENSE") {
+		rename { "${it}_fatescommon" }
+	}
+}
+
+// Published to the `maven` branch of this repo by the release workflow (tags v*), served at
+// https://raw.githubusercontent.com/DontTemptFate/Fates_Common/maven. Consumers:
+//   repositories { maven { url "https://raw.githubusercontent.com/DontTemptFate/Fates_Common/maven" } }
+//   implementation "io.github.donttemptfate:fatescommon:<version>+mc<mc>"
+//   include "io.github.donttemptfate:fatescommon:<version>+mc<mc>"
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			artifactId = project.archives_base_name
+			from components.java
+		}
+	}
+	repositories {
+		maven {
+			name = "out"
+			url = layout.buildDirectory.dir("repo")
+		}
+	}
+}
