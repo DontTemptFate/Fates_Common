@@ -11,9 +11,9 @@ copy, so it's loaded once.
 
 | Package | What |
 |---|---|
-| `fates.common.ui` | **The Fates look**: `Ui` (colours, text sizes, Chakra Petch ≥ 8.5 px and Minecraft's pixel font below, frame), `Card` (the card renderer: header, hero number, rules, grids, key/value rows, stats, sales bars, status line, wrapped text, progress bar, scrolling), `DeferredTooltip` (draw a card as this frame's tooltip) |
-| `fates.common.text` | `LegacyText` (§ codes: parse, strip, sanitise server text), `Coins` (1.23M, ages, percents), `Versions` (compare `MAJOR.MINOR.PATCH[-beta.N]`, safe download links) |
-| `fates.common.skyblock` | `ItemFacts` (an item's SkyBlock data, lore, listing cut and cache key, worked out once per item), `LoreParts` (Hypixel's auction listing lines, Bazaar products), `SkyBlockLocation` (in SkyBlock / in a dungeon or Kuudra, from the sidebar; no Hypixel Mod API) |
+| `fatescommon.ui` | **The Fates look**: `Ui` (colours, text sizes, Chakra Petch ≥ 8.5 px and Minecraft's pixel font below, frame), `Card` (the card renderer: header, hero number, rules, grids, key/value rows, stats, sales bars, status line, wrapped text, progress bar, scrolling), `DeferredTooltip` (draw a card as this frame's tooltip) |
+| `fatescommon.text` | `LegacyText` (§ codes: parse, strip, sanitise server text), `Coins` (1.23M, ages, percents), `Versions` (compare `MAJOR.MINOR.PATCH[-beta.N]`, safe download links) |
+| `fatescommon.skyblock` | `ItemFacts` (an item's SkyBlock data, lore, listing cut and cache key, worked out once per item), `LoreParts` (Hypixel's auction listing lines, Bazaar products), `SkyBlockLocation` (in SkyBlock / in a dungeon or Kuudra, from the sidebar; no Hypixel Mod API) |
 | assets `fatescommon:` | Chakra Petch (SIL OFL 1.1, `licenses/chakra-petch-OFL.txt`) and one font definition per text size |
 
 Rules for everything here: **display and reading only.** Nothing in this library sends anything to a
