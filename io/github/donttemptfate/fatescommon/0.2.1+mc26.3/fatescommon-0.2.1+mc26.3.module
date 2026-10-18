@@ -1,0 +1,96 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "io.github.donttemptfate",
+    "module": "fatescommon",
+    "version": "0.2.1+mc26.3",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.7.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 25,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "fatescommon-0.2.1+mc26.3.jar",
+          "url": "fatescommon-0.2.1+mc26.3.jar",
+          "size": 179622,
+          "sha512": "ad5b618066dffe69e60b2663a8bbe8d2da4439df8ebbe2f4c12d33879ef20729488bec82dbd2204780018174220b01267088e84d16ffa2dc51ceacbeac2e3c8d",
+          "sha256": "4094aa6a6ff0eda5c73c5738fd9dd266bbefe87cbbd04edd16211cd8ddadb72d",
+          "sha1": "384d6d5cade85b9c85a38cddf688f7e2a37040bc",
+          "md5": "3001dff1a40a9fa92836bf944ddd1f8b"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 25,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "net.fabricmc",
+          "module": "fabric-loader",
+          "version": {
+            "requires": "0.19.5"
+          }
+        },
+        {
+          "group": "net.fabricmc.fabric-api",
+          "module": "fabric-api",
+          "version": {
+            "requires": "0.163.0+26.3"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "fatescommon-0.2.1+mc26.3.jar",
+          "url": "fatescommon-0.2.1+mc26.3.jar",
+          "size": 179622,
+          "sha512": "ad5b618066dffe69e60b2663a8bbe8d2da4439df8ebbe2f4c12d33879ef20729488bec82dbd2204780018174220b01267088e84d16ffa2dc51ceacbeac2e3c8d",
+          "sha256": "4094aa6a6ff0eda5c73c5738fd9dd266bbefe87cbbd04edd16211cd8ddadb72d",
+          "sha1": "384d6d5cade85b9c85a38cddf688f7e2a37040bc",
+          "md5": "3001dff1a40a9fa92836bf944ddd1f8b"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "fatescommon-0.2.1+mc26.3-sources.jar",
+          "url": "fatescommon-0.2.1+mc26.3-sources.jar",
+          "size": 137715,
+          "sha512": "9162dc41245e8e58619a7e319bb5b2d30aa9e87b2ba6a6bf4d2c3fb87bea24fe1b6c3a21eaedf5be5bc0d802adf51f19807ddad295b948199894535fe5575dca",
+          "sha256": "c49bd3420bee965124e9e27fadd8ae9c689e90184eda2cd9f55b146c08f3639e",
+          "sha1": "84eb74ce53fa4595d95df32f1ed90515958c8b35",
+          "md5": "f7652dd7b2be12fd0681fbe8c6668451"
+        }
+      ]
+    }
+  ]
+}
