@@ -77,7 +77,7 @@ public final class LegacyText {
 	}
 
 	/** One line, no control characters, bounded length. */
-	static String sanitize(String input) {
+	public static String sanitize(String input) {
 		StringBuilder sb = new StringBuilder(Math.min(input.length(), MAX_CHARS));
 		for (int i = 0; i < input.length() && sb.length() < MAX_CHARS; i++) {
 			char c = input.charAt(i);

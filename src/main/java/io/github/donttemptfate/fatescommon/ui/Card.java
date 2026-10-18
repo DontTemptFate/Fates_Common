@@ -609,6 +609,10 @@ public final class Card {
 			this.role = role;
 		}
 
+		public boolean isEmpty() {
+			return keys.isEmpty();
+		}
+
 		/** Always one column (rows whose values change, like a countdown, then never jump between columns). */
 		public Stats single() {
 			single = true;
